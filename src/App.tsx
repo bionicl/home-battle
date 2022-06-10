@@ -1,20 +1,37 @@
-import { Tabs, Typography } from 'antd';
+import { Table, Tabs, Typography } from 'antd';
 import { useEffect, useState } from 'react';
+import { LogRow } from '../types/LogRow';
 import './App.css';
 import { getAll } from './services';
 
-const { Title, Text, Link } = Typography;
+const { Title } = Typography;
 const { TabPane } = Tabs;
 
-
+const columns = [
+  {
+    title: 'Kto',
+    dataIndex: 'who',
+    key: 'who',
+  },
+  {
+    title: 'Opis',
+    dataIndex: 'description',
+    key: 'description',
+  },
+  {
+    title: 'Ilość',
+    dataIndex: 'count',
+    key: 'count',
+  },
+];
 
 function App() {
-  const [num, setNum] = useState(0);
+  const [data, setData] = useState<LogRow[]>();
 
   function getNum() {
     getAll()
       .then((res) => {
-        console.log(res.data);
+        setData(res.data);
       })
   }
 
@@ -27,7 +44,11 @@ function App() {
       <Title level={2}>Bitwa o mieszkanie</Title>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Historia" key="1">
-          Content of Tab Pane 1
+          <Table
+            dataSource={data}
+            columns={columns}
+            size="small"
+          />
         </TabPane>
         <TabPane tab="Podsumowanie" key="2">
           Content of Tab Pane 2

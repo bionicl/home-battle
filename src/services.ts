@@ -1,6 +1,7 @@
 import axios from "axios"
+import { LogRow } from "../types/LogRow"
 
-var API_URL = "https://home-battle.azurewebsites.net/api/httptrigger1"
+var apiPath = "https://home-battle.azurewebsites.net/api/"
 
 /**
  * Get a list
@@ -8,5 +9,5 @@ var API_URL = "https://home-battle.azurewebsites.net/api/httptrigger1"
  * @returns
  */
 export function getAll() {
-	return axios.get("https://home-battle.azurewebsites.net/api/httptrigger1")
+	return axios.get<LogRow[]>(apiPath + "tasks")
 }

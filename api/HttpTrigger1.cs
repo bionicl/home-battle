@@ -15,26 +15,39 @@ using System.Collections.Generic;
 
 namespace TealFire.HomeBattle
 {
-	public static class HttpTrigger1
+	public static class GetTasks
 	{
-		[FunctionName("HttpTrigger1")]
+		[FunctionName("GetTasks")]
 		public static async Task<IActionResult> Run(
-				[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+				[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "tasks")] HttpRequest req,
 				ILogger log)
 		{
 			var client = new MongoClient(Environment.GetEnvironmentVariable("mongoDBURL", EnvironmentVariableTarget.Process));
 			var database = client.GetDatabase("db");
 			var collection = database.GetCollection<LogRow>("log");
-			var documents = await collection.Find(s => s.notes != "" || s.notes == "").ToListAsync();
+			var documents = await collection.Aggregate<LogRow>().ToListAsync();
 
 
-			string output = "";
-			foreach (var item in documents)
-			{
-				// BsonClassMap.RegisterClassMap<MyClass>();
-				output += JsonConvert.SerializeObject(item) + "\n";
-				// item[]
-			}
+			string output = JsonConvert.SerializeObject(documents);
+			return new OkObjectResult(output);
+		}
+	}
+
+	public static class GetDescriptions
+	{
+
+		[FunctionName("GetDescriptions")]
+		public static async Task<IActionResult> Run(
+				[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "descriptions")] HttpRequest req,
+				ILogger log)
+		{
+			var client = new MongoClient(Environment.GetEnvironmentVariable("mongoDBURL", EnvironmentVariableTarget.Process));
+			var database = client.GetDatabase("db");
+			var collection = database.GetCollection<LogRow>("descriptions");
+			var documents = await collection.Aggregate<LogRow>().ToListAsync();
+
+
+			string output = JsonConvert.SerializeObject(documents);
 			return new OkObjectResult(output);
 		}
 	}
