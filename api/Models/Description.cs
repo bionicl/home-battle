@@ -1,14 +1,16 @@
 using Newtonsoft.Json;
 using System;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace TealFire.HomeBattle.Models
 {
 	public class Description
 	{
-		[JsonProperty("name")]
+		[BsonId]
+		public ObjectId Id;
+		public string key;
 		public string name;
-
-		[JsonProperty("weight")]
 		public double weight;
 	}
 }

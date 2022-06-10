@@ -1,42 +1,28 @@
-import { Table, Tabs, Typography } from 'antd';
+import { Tabs, Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import { LogRow } from '../types/LogRow';
 import './App.css';
-import { getAll } from './services';
+import HistoryComponent from './components/HistoryComponent';
+import TasksComponent from './components/TasksComponent';
+import { getAllHistory, getAllTasks } from './services';
+import { HistoryRow } from './types/HistoryRow';
+import { Task } from './types/Task';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
-const columns = [
-  {
-    title: 'Kto',
-    dataIndex: 'who',
-    key: 'who',
-  },
-  {
-    title: 'Opis',
-    dataIndex: 'description',
-    key: 'description',
-  },
-  {
-    title: 'Ilość',
-    dataIndex: 'count',
-    key: 'count',
-  },
-];
-
 function App() {
-  const [data, setData] = useState<LogRow[]>();
-
-  function getNum() {
-    getAll()
-      .then((res) => {
-        setData(res.data);
-      })
-  }
+  const [historyRows, setHistoryRows] = useState<HistoryRow[]>();
+  const [tasks, setTasks] = useState<Task[]>();
 
   useEffect(() => {
-    getNum();
+    getAllHistory()
+      .then((res) => {
+        setHistoryRows(res.data);
+      })
+    getAllTasks()
+      .then((res) => {
+        setTasks(res.data);
+      })
   }, []);
 
   return (
@@ -44,14 +30,10 @@ function App() {
       <Title level={2}>Bitwa o mieszkanie</Title>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Historia" key="1">
-          <Table
-            dataSource={data}
-            columns={columns}
-            size="small"
-          />
+          <HistoryComponent data={historyRows} tasks={tasks} />
         </TabPane>
-        <TabPane tab="Podsumowanie" key="2">
-          Content of Tab Pane 2
+        <TabPane tab="Zadania" key="2">
+          <TasksComponent data={tasks} />
         </TabPane>
       </Tabs>
     </div>

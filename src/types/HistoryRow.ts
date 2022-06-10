@@ -1,4 +1,4 @@
-export type LogRow = {
+export type HistoryRow = {
 	Id: string,
 	date: string,
 	who: "Maciej" | "Zofia",

@@ -43,8 +43,8 @@ namespace TealFire.HomeBattle
 		{
 			var client = new MongoClient(Environment.GetEnvironmentVariable("mongoDBURL", EnvironmentVariableTarget.Process));
 			var database = client.GetDatabase("db");
-			var collection = database.GetCollection<LogRow>("descriptions");
-			var documents = await collection.Aggregate<LogRow>().ToListAsync();
+			var collection = database.GetCollection<Description>("descriptions");
+			var documents = await collection.Aggregate<Description>().ToListAsync();
 
 
 			string output = JsonConvert.SerializeObject(documents);
