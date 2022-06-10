@@ -1,11 +1,27 @@
 import { Tabs, Typography } from 'antd';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { getAll } from './services';
 
 const { Title, Text, Link } = Typography;
 const { TabPane } = Tabs;
 
 
+
 function App() {
+  const [num, setNum] = useState(0);
+
+  function getNum() {
+    getAll()
+      .then((res) => {
+        console.log(res.data);
+      })
+  }
+
+  useEffect(() => {
+    getNum();
+  }, []);
+
   return (
     <div className="app">
       <Title level={2}>Bitwa o mieszkanie</Title>
