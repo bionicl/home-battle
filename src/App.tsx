@@ -51,7 +51,7 @@ function App() {
 
   return (
     <div className="app">
-      <Title style={{ marginTop: 48 }} level={2}>⚔️ Bitwa o mieszkanie</Title>
+      <Title style={{ marginTop: 48 }} level={2}>⚔️ Bitwa o porządek</Title>
       <ProgressComponent progress={progress} />
       <Tabs defaultActiveKey="1">
         <TabPane tab="Historia" key="1">

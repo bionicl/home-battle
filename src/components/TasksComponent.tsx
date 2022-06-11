@@ -1,5 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, InputNumber, message, Modal, PageHeader, Spin, Table, Typography } from 'antd';
+import { Button, ConfigProvider, Empty, Form, Input, InputNumber, message, Modal, PageHeader, Spin, Table, Typography } from 'antd';
 import { useEffect, useState } from "react";
 import { createNewTask, removeTask } from "../services";
 import { Task } from '../types/Task';
@@ -66,6 +66,10 @@ function TasksComponent({ data, refreshData }: Props) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isModalVisible])
 
+	const customizeRenderEmpty = () => (
+		<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Brak zadań, utwórz nowe!" />
+	);
+
 	return (
 		<>
 			{data ?
@@ -79,12 +83,15 @@ function TasksComponent({ data, refreshData }: Props) {
 							type="primary">Utwórz
 						</Button>}
 				>
-					<Table
-						dataSource={data}
-						columns={descriptionColumns}
-						size="small"
-						pagination={false}
-					/>
+					<ConfigProvider renderEmpty={customizeRenderEmpty}>
+						<Table
+							dataSource={data}
+							columns={descriptionColumns}
+							size="small"
+							pagination={false}
+
+						/>
+					</ConfigProvider>
 				</PageHeader>
 				: <Spin style={{ marginTop: 24 }} />}
 

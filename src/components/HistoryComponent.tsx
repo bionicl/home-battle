@@ -1,5 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, InputNumber, message, Modal, PageHeader, Select, Space, Spin, Table, Tooltip, Typography } from 'antd';
+import { Button, ConfigProvider, DatePicker, Empty, Form, InputNumber, message, Modal, PageHeader, Select, Space, Spin, Table, Tooltip, Typography } from 'antd';
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import 'moment/locale/pl';
@@ -90,6 +90,10 @@ function HistoryComponent({ data, tasks, refreshData }: Props) {
 		}
 	}
 
+	const customizeRenderEmpty = () => (
+		<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Brak historii" />
+	);
+
 	return (
 		<>
 			{data ?
@@ -103,13 +107,15 @@ function HistoryComponent({ data, tasks, refreshData }: Props) {
 							type="primary">Utwórz
 						</Button>}
 				>
-					<Table
+					<ConfigProvider renderEmpty={customizeRenderEmpty}>
+						<Table
 
-						dataSource={data}
-						columns={tasksColumns}
-						size="small"
-						pagination={false}
-					/>
+							dataSource={data}
+							columns={tasksColumns}
+							size="small"
+							pagination={false}
+						/>
+					</ConfigProvider>
 				</PageHeader>
 				: <Spin style={{ marginTop: 24 }} />}
 			<Modal

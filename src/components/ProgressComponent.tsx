@@ -21,7 +21,7 @@ function ProgressComponent({ progress }: Props) {
 			<Space>
 				<Space direction="vertical">
 					<Title
-						type={whoHasMore == "maciej" ? "success" : undefined}
+						type={whoHasMore === "maciej" ? "success" : undefined}
 						style={{ marginBottom: -8 }}
 						level={2}>{progress?.maciejPoints}
 					</Title>
@@ -30,7 +30,7 @@ function ProgressComponent({ progress }: Props) {
 				<Text>vs</Text>
 				<Space direction="vertical">
 					<Title
-						type={whoHasMore == "zofia" ? "success" : undefined}
+						type={whoHasMore === "zofia" ? "success" : undefined}
 						style={{ marginBottom: -8 }}
 						level={2}>{progress?.zofiaPoints}</Title>
 					<Text>Zofia 🥦</Text>

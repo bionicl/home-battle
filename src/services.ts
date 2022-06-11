@@ -3,8 +3,8 @@ import { HistoryRow, HistoryRowPartial } from "./types/HistoryRow"
 import { Progress } from "./types/Progress"
 import { Task } from "./types/Task"
 
-// var apiPath = "https://home-battle.azurewebsites.net/api/"
-var apiPath = "http://localhost:7071/api/"
+var apiPath = "https://home-battle.azurewebsites.net/api/"
+// var apiPath = "http://localhost:7071/api/"
 
 // History
 export function getAllHistory() {
