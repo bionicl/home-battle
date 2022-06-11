@@ -52,6 +52,7 @@ function TasksComponent({ data, refreshData }: Props) {
 			form.resetFields();
 			setLoading(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isModalVisible])
 
 	return (
