@@ -25,6 +25,10 @@ function App() {
       })
   }, []);
 
+  function refreshTasks(newData: Task[]) {
+    setTasks(newData);
+  }
+
   return (
     <div className="app">
       <Title style={{ marginTop: 48 }} level={2}>⚔️ Bitwa o mieszkanie</Title>
@@ -33,7 +37,7 @@ function App() {
           <HistoryComponent data={historyRows} tasks={tasks} />
         </TabPane>
         <TabPane tab="Zadania" key="2">
-          <TasksComponent data={tasks} />
+          <TasksComponent data={tasks} refreshData={refreshTasks} />
         </TabPane>
       </Tabs>
     </div>

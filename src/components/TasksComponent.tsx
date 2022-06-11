@@ -8,6 +8,7 @@ const { Text } = Typography;
 
 type Props = {
 	data?: Task[];
+	refreshData: (newData: Task[]) => void;
 };
 
 const descriptionColumns = [
@@ -31,16 +32,17 @@ const descriptionColumns = [
 
 
 
-function TasksComponent({ data }: Props) {
+function TasksComponent({ data, refreshData }: Props) {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
 
 	function createTask(values: { name: string, weight: number }) {
 		setLoading(true);
-		createNewTask(values).then(() => {
+		createNewTask(values).then((res) => {
 			setLoading(false);
 			setIsModalVisible(false);
+			refreshData(res.data)
 			message.info("Created new task!");
 		})
 	}
