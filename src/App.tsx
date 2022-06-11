@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="app">
-      <Title level={2}>Bitwa o mieszkanie</Title>
+      <Title style={{ marginTop: 48 }} level={2}>⚔️ Bitwa o mieszkanie</Title>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Historia" key="1">
           <HistoryComponent data={historyRows} tasks={tasks} />

@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace TealFire.HomeBattle.Models
 {
-	public class Description
+	public class Task
 	{
 		[BsonId]
 		public ObjectId Id;

@@ -6,9 +6,13 @@ import { Task } from "./types/Task"
 var apiPath = "http://localhost:7071/api/"
 
 export function getAllHistory() {
-	return axios.get<HistoryRow[]>(apiPath + "tasks")
+	return axios.get<HistoryRow[]>(apiPath + "history")
 }
 
 export function getAllTasks() {
-	return axios.get<Task[]>(apiPath + "descriptions")
+	return axios.get<Task[]>(apiPath + "tasks")
+}
+
+export function createNewTask(data: { name: string, weight: number }) {
+	return axios.post<Task>(apiPath + "tasks", data)
 }

@@ -17,9 +17,9 @@ namespace TealFire.HomeBattle
 {
 	public static class GetTasks
 	{
-		[FunctionName("GetTasks")]
+		[FunctionName("GetHistory")]
 		public static async Task<IActionResult> Run(
-				[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "tasks")] HttpRequest req,
+				[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "history")] HttpRequest req,
 				ILogger log)
 		{
 			var client = new MongoClient(Environment.GetEnvironmentVariable("mongoDBURL", EnvironmentVariableTarget.Process));
@@ -36,15 +36,15 @@ namespace TealFire.HomeBattle
 	public static class GetDescriptions
 	{
 
-		[FunctionName("GetDescriptions")]
+		[FunctionName("GetTasks")]
 		public static async Task<IActionResult> Run(
-				[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "descriptions")] HttpRequest req,
+				[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "tasks")] HttpRequest req,
 				ILogger log)
 		{
 			var client = new MongoClient(Environment.GetEnvironmentVariable("mongoDBURL", EnvironmentVariableTarget.Process));
 			var database = client.GetDatabase("db");
-			var collection = database.GetCollection<Description>("descriptions");
-			var documents = await collection.Aggregate<Description>().ToListAsync();
+			var collection = database.GetCollection<TealFire.HomeBattle.Models.Task>("descriptions");
+			var documents = await collection.Aggregate<TealFire.HomeBattle.Models.Task>().ToListAsync();
 
 
 			string output = JsonConvert.SerializeObject(documents);

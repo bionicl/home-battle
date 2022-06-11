@@ -35,11 +35,13 @@ function HistoryComponent({ data, tasks }: Props) {
 	];
 
 	return (
-		<Table
-			dataSource={data}
-			columns={tasksColumns}
-			size="small"
-		/>
+		data ?
+			<Table
+				dataSource={data}
+				columns={tasksColumns}
+				size="small"
+			/>
+			: <Spin style={{ marginTop: 24 }} />
 	)
 }
 
