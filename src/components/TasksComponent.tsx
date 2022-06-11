@@ -1,34 +1,17 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, InputNumber, message, Modal, PageHeader, Spin, Table, Typography } from 'antd';
 import { useEffect, useState } from "react";
-import { createNewTask } from "../services";
+import { createNewTask, removeTask } from "../services";
 import { Task } from '../types/Task';
 
-const { Text } = Typography;
+const { Text, Link } = Typography;
 
 type Props = {
 	data?: Task[];
 	refreshData: (newData: Task[]) => void;
 };
 
-const descriptionColumns = [
-	{
-		title: 'Nazwa',
-		dataIndex: 'name',
-		key: 'name',
-	},
-	{
-		title: 'Klucz',
-		dataIndex: 'key',
-		key: 'key',
-		render: (key: string) => <Text type="warning">{key}</Text>
-	},
-	{
-		title: 'Waga',
-		dataIndex: 'weight',
-		key: 'weight',
-	},
-];
+
 
 
 
@@ -37,13 +20,45 @@ function TasksComponent({ data, refreshData }: Props) {
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
 
+	const descriptionColumns = [
+		{
+			title: 'Nazwa',
+			dataIndex: 'name',
+			key: 'name',
+		},
+		{
+			title: 'Klucz',
+			dataIndex: 'key',
+			key: 'key',
+			render: (key: string) => <Text type="warning">{key}</Text>
+		},
+		{
+			title: 'Waga',
+			dataIndex: 'weight',
+			key: 'weight',
+		},
+		{
+			title: 'Akcje',
+			dataIndex: 'action',
+			key: 'action',
+			render: (key: string, entry: Task) => <Link onClick={() => removeTaskAction(entry)} type="danger">Usuń</Link>
+		},
+	];
+
+	function removeTaskAction(task: Task) {
+		removeTask(task.Id).then((res) => {
+			refreshData(res.data);
+			message.info("Usunięto zadanie!");
+		})
+	}
+
 	function createTask(values: { name: string, weight: number }) {
 		setLoading(true);
 		createNewTask(values).then((res) => {
 			setLoading(false);
 			setIsModalVisible(false);
 			refreshData(res.data)
-			message.info("Created new task!");
+			message.info("Dodano zadanie!");
 		})
 	}
 

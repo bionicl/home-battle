@@ -104,4 +104,22 @@ namespace TealFire.HomeBattle
 			return new OkObjectResult(output);
 		}
 	}
+
+	public static class RemoveTask
+	{
+
+		[FunctionName("RemoveTask")]
+		public static async Task<IActionResult> Run(
+				[HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "tasks/{id}")] HttpRequest req,
+				string id, ILogger log)
+		{
+			var client = new MongoClient(Environment.GetEnvironmentVariable("mongoDBURL", EnvironmentVariableTarget.Process));
+			var database = client.GetDatabase("db");
+			var collection = database.GetCollection<TealFire.HomeBattle.Models.Task>("descriptions");
+			collection.DeleteOne("{ _id: \"" + id + "\" }");
+			var documents = await collection.Aggregate<TealFire.HomeBattle.Models.Task>().ToListAsync();
+			string output = JsonConvert.SerializeObject(documents);
+			return new OkObjectResult(output);
+		}
+	}
 }
