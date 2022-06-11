@@ -11,10 +11,6 @@ type Props = {
 	refreshData: (newData: Task[]) => void;
 };
 
-
-
-
-
 function TasksComponent({ data, refreshData }: Props) {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [loading, setLoading] = useState(false);

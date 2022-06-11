@@ -11,7 +11,7 @@ namespace TealFire.HomeBattle.Models
 		public ObjectId Id;
 		public string key;
 		public string name;
-		public double weight;
+		public int weight;
 	}
 }
 

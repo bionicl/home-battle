@@ -1,5 +1,6 @@
 import axios from "axios"
 import { HistoryRow, HistoryRowPartial } from "./types/HistoryRow"
+import { Progress } from "./types/Progress"
 import { Task } from "./types/Task"
 
 // var apiPath = "https://home-battle.azurewebsites.net/api/"
@@ -27,4 +28,9 @@ export function createNewTask(data: { name: string, weight: number }) {
 
 export function removeTask(id: string) {
 	return axios.delete(apiPath + "tasks/" + id);
+}
+
+// Progress
+export function getProgress() {
+	return axios.get<Progress>(apiPath + "progress")
 }

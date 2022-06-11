@@ -3,9 +3,11 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import './App.css';
 import HistoryComponent from './components/HistoryComponent';
+import ProgressComponent from './components/ProgressComponent';
 import TasksComponent from './components/TasksComponent';
-import { getAllHistory, getAllTasks } from './services';
+import { getAllHistory, getAllTasks, getProgress } from './services';
 import { HistoryRow } from './types/HistoryRow';
+import { Progress } from './types/Progress';
 import { Task } from './types/Task';
 
 const { Title } = Typography;
@@ -14,6 +16,7 @@ const { TabPane } = Tabs;
 function App() {
   const [historyRows, setHistoryRows] = useState<HistoryRow[]>();
   const [tasks, setTasks] = useState<Task[]>();
+  const [progress, setProgress] = useState<Progress>();
 
   useEffect(() => {
     getAllHistory()
@@ -38,7 +41,10 @@ function App() {
   }
 
   function downloadProgress() {
-
+    getProgress()
+      .then((res) => {
+        setProgress(res.data);
+      })
   }
 
   moment.locale('pl')
@@ -46,6 +52,7 @@ function App() {
   return (
     <div className="app">
       <Title style={{ marginTop: 48 }} level={2}>⚔️ Bitwa o mieszkanie</Title>
+      <ProgressComponent progress={progress} />
       <Tabs defaultActiveKey="1">
         <TabPane tab="Historia" key="1">
           <HistoryComponent data={historyRows} tasks={tasks} refreshData={refreshHistory} />

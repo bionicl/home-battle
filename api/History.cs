@@ -26,7 +26,7 @@ namespace TealFire.HomeBattle
 			var client = new MongoClient(Environment.GetEnvironmentVariable("mongoDBURL", EnvironmentVariableTarget.Process));
 			var database = client.GetDatabase("db");
 			var collection = database.GetCollection<LogRow>("log");
-			var documents = await collection.Aggregate<LogRow>().ToListAsync();
+			var documents = await collection.Aggregate<LogRow>().SortByDescending(e => e.date).ToListAsync();
 
 
 			string output = JsonConvert.SerializeObject(documents);
@@ -69,7 +69,7 @@ namespace TealFire.HomeBattle
 			};
 
 			collection.InsertOne(document);
-			var documents = await collection.Aggregate<TealFire.HomeBattle.Models.LogRow>().ToListAsync();
+			var documents = await collection.Aggregate<TealFire.HomeBattle.Models.LogRow>().SortByDescending(e => e.date).ToListAsync();
 			string output = JsonConvert.SerializeObject(documents);
 			return new OkObjectResult(output);
 		}
@@ -87,7 +87,7 @@ namespace TealFire.HomeBattle
 			var database = client.GetDatabase("db");
 			var collection = database.GetCollection<TealFire.HomeBattle.Models.LogRow>("log");
 			collection.DeleteOne("{ _id: \"" + id + "\" }");
-			var documents = await collection.Aggregate<TealFire.HomeBattle.Models.LogRow>().ToListAsync();
+			var documents = await collection.Aggregate<TealFire.HomeBattle.Models.LogRow>().SortByDescending(e => e.date).ToListAsync();
 			string output = JsonConvert.SerializeObject(documents);
 			return new OkObjectResult(output);
 		}

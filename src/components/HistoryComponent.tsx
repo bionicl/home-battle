@@ -1,7 +1,8 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, InputNumber, message, Modal, PageHeader, Select, Space, Spin, Table, Typography } from 'antd';
+import { Button, DatePicker, Form, InputNumber, message, Modal, PageHeader, Select, Space, Spin, Table, Tooltip, Typography } from 'antd';
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
+import 'moment/locale/pl';
 import { useState } from 'react';
 import { createNewHistoryRow, removeHistoryRow } from "../services";
 import { HistoryRow, HistoryRowPartial } from '../types/HistoryRow';
@@ -20,13 +21,17 @@ function HistoryComponent({ data, tasks, refreshData }: Props) {
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
 
+	moment.locale("pl");
+
 	const tasksColumns = [
 		{
 			title: 'Data',
 			dataIndex: 'date',
 			key: 'date',
 			render: (date: string) => (
-				<Text>{moment(date?.toString()).format("LLL")}</Text>
+				<Tooltip title={moment(date?.toString()).format("LLL")}>
+					<Text>{moment(date?.toString()).fromNow()}</Text>
+				</Tooltip>
 			)
 		},
 		{
@@ -99,6 +104,7 @@ function HistoryComponent({ data, tasks, refreshData }: Props) {
 						</Button>}
 				>
 					<Table
+
 						dataSource={data}
 						columns={tasksColumns}
 						size="small"
@@ -125,7 +131,7 @@ function HistoryComponent({ data, tasks, refreshData }: Props) {
 					initialValues={{
 						date: moment(),
 						who: "Zofia",
-						description: tasks ? tasks[0].key : undefined,
+						description: (tasks && tasks?.length > 0) ? tasks[0].key : undefined,
 						count: 1
 					}}
 				>
