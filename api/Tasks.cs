@@ -16,23 +16,7 @@ using System.Collections.Generic;
 
 namespace TealFire.HomeBattle
 {
-	public static class GetHistory
-	{
-		[FunctionName("GetHistory")]
-		public static async Task<IActionResult> Run(
-				[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "history")] HttpRequest req,
-				ILogger log)
-		{
-			var client = new MongoClient(Environment.GetEnvironmentVariable("mongoDBURL", EnvironmentVariableTarget.Process));
-			var database = client.GetDatabase("db");
-			var collection = database.GetCollection<LogRow>("log");
-			var documents = await collection.Aggregate<LogRow>().ToListAsync();
 
-
-			string output = JsonConvert.SerializeObject(documents);
-			return new OkObjectResult(output);
-		}
-	}
 
 	public static class GetTasks
 	{

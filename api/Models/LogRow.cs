@@ -11,21 +11,14 @@ namespace TealFire.HomeBattle.Models
 	{
 		[BsonId]
 		public ObjectId Id;
-		public DateTime date;
-		[JsonConverter(typeof(StringEnumConverter))]
-		public Who who;
+		public string date;
+		public string who;
 		public string description;
 		public int count;
 		public string notes;
 
 		// [BsonExtraElements]
 		// public object[] Bucket;
-	}
-
-	public enum Who
-	{
-		Maciej,
-		Zofia
 	}
 }
 

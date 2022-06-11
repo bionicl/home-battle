@@ -87,6 +87,7 @@ function TasksComponent({ data, refreshData }: Props) {
 						dataSource={data}
 						columns={descriptionColumns}
 						size="small"
+						pagination={false}
 					/>
 				</PageHeader>
 				: <Spin style={{ marginTop: 24 }} />}
